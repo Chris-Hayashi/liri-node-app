@@ -38,7 +38,24 @@ function searchSong(song) {
             console.log("Album: " + response.tracks.items[0].album.name);
         }
     });
-};
+}
+
+function searchMovie(movie) {
+
+    var name = movie.split(" ").join("+");
+
+    axios.get("http://www.omdbapi.com/?t=" + name + "&apikey=9f733008")
+    .then(function(response) {
+        console.log("Movie: " + response.data.Title);
+        console.log("Year: " + response.data.Year);
+        console.log("IMDB Rating: " + response.data.Ratings[0].Value);
+        console.log("Rotten Tomatoes: " + response.data.Ratings[1].Value);
+        console.log("Produced in: " + response.data.Country);
+        console.log("Language: " + response.data.Language);
+        console.log("Plot: " + response.data.Plot);
+        console.log("Actors: " + response.data.Actors);
+    });
+}
 
 //if the command is equal to "concert-this"
 if (command === "concert-this") {
@@ -78,4 +95,14 @@ else if (command === "spotify-this-song") {
     searchSong(song);
 }
 
-// else if (command ===)
+else if (command === "movie-this") {
+
+    //store the name of the movie
+    var movie = process.argv[3];
+
+    if (movie === undefined) {
+        searchMovie("Mr. Nobody");
+    } else {
+        searchMovie(movie);
+    }
+}
