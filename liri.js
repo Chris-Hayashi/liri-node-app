@@ -49,8 +49,7 @@ function searchConcert(artist) {
 
             //console log the formatted date
             console.log("Date: " + date);
-        })
-        .catch(function(error) {
+        }).catch(function(error) {
             console.log("There are no upcoming concerts for that artist.");
         });
 }
@@ -83,23 +82,29 @@ function searchSong(song) {
 
 function searchMovie(movie) {
 
-    if (movie === undefined)
+    if (movie === undefined) {
+        console.log("You did not enter a movie, so here's one I thought you might enjoy: \n");
         searchMovie("Mr. Nobody");
-    else {
+    } else {
 
         var name = movie.split(" ").join("+");
         
         axios.get("http://www.omdbapi.com/?t=" + name + "&apikey=9f733008")
-        .then(function(response) {
-            console.log("Movie: " + response.data.Title);
-            console.log("Year: " + response.data.Year);
-            console.log("IMDB Rating: " + response.data.Ratings[0].Value);
-            console.log("Rotten Tomatoes: " + response.data.Ratings[1].Value);
-            console.log("Produced in: " + response.data.Country);
-            console.log("Language: " + response.data.Language);
-            console.log("Plot: " + response.data.Plot);
-            console.log("Actors: " + response.data.Actors);
-        });
+            .then(function(response) {
+                if (response.data.Title === undefined)
+                    throw new Exception(); 
+                console.log("Movie: " + response.data.Title);
+                console.log("Year: " + response.data.Year);
+                console.log("IMDB Rating: " + response.data.Ratings[0].Value);
+                console.log("Rotten Tomatoes: " + response.data.Ratings[1].Value);
+                console.log("Produced in: " + response.data.Country);
+                console.log("Language: " + response.data.Language);
+                console.log("Plot: " + response.data.Plot);
+                console.log("Actors: " + response.data.Actors);
+            }).catch(function(error) {
+                console.log("You did not enter a valid movie title.");
+            });
+
     }
 }
 
