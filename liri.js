@@ -106,3 +106,7 @@ else if (command === "movie-this") {
         searchMovie(movie);
     }
 }
+
+else if (command === "do-what-it-says") {
+    
+}
