@@ -25,6 +25,8 @@ var command = process.argv[2];
 console.log("");
 
 function searchConcert(artist) {
+    if (artist === undefined)
+        return console.log("You did not enter an artist");
 
     //perform a get request on axios using bandsintown
     axios.get("https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp")
