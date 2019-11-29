@@ -31,6 +31,10 @@ function searchConcert(artist) {
     //perform a get request on axios using bandsintown
     axios.get("https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp")
         .then(function(response) {
+            if (response.data[0].venue.name === undefined)
+                throw new Exception();
+
+            console.log("Here are the details for " + artist + "'s concert: \n");
 
             //then console log the venue
             console.log("Venue: " + response.data[0].venue.name);
@@ -57,6 +61,7 @@ function searchConcert(artist) {
 function searchSong(song) {
 
     if (song === undefined) {
+        console.log("You did not enter a song, so here's one I thought you might enjoy: \n");
         searchSong("The Sign Ace of Base");
     }
 
@@ -144,6 +149,9 @@ else if (command === "do-what-it-says") {
         var text = contents.split(",");
         var textCommand = text[0];
         var textName = text[1];
+
+        if (textName)
+            textName = textName.substring(1, textName.length - 1);
 
         if (textCommand === "concert-this")
             searchConcert(textName);
