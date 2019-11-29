@@ -21,6 +21,25 @@ var command = process.argv[2];
 
 console.log("");
 
+function searchSong(song) {
+    spotify.search({
+        type: "track",
+        query: song,
+        limit: 1
+    }, function(error, response) {
+
+        if (error) {
+            searchSong("The Sign Ace of Base");
+
+        } else {
+            console.log("Artist: " + response.tracks.items[0].album.artists[0].name);
+            console.log("Song: " + response.tracks.items[0].name);
+            console.log("Preview Link: " + response.tracks.items[0].external_urls.spotify);
+            console.log("Album: " + response.tracks.items[0].album.name);
+        }
+    });
+};
+
 //if the command is equal to "concert-this"
 if (command === "concert-this") {
     
@@ -56,19 +75,7 @@ else if (command === "spotify-this-song") {
     //store the name of the song
     var song = process.argv[3];
 
-    spotify.search({
-        type: "track",
-        query: song,
-        limit: 1
-    }, function(error, response) {
-
-        if (error) {
-            return console.log("Error occurred: " + error);
-        }
-
-        console.log("Artist: " + response.tracks.items[0].album.artists[0].name);
-        console.log("Song: " + response.tracks.items[0].name);
-        console.log("Preview Link: " + response.tracks.items[0].external_urls.spotify);
-        console.log("Album: " + response.tracks.items[0].album.name);
-    });
+    searchSong(song);
 }
+
+// else if (command ===)
